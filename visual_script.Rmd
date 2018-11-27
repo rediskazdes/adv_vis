@@ -1,0 +1,359 @@
+---
+title: "Untitled"
+output: html_document
+---
+
+Немного рассказа о том, что это вообще за табличка
+Зачем это нужно
+
+```{r}
+load("xmpl.rda")
+View(compare)
+```
+
+```{r}
+library(ggplot2)
+ggplot(mtcars, aes(x=wt, y=mpg, label = rownames(mtcars))) + geom_text()
+```
+
+```{r}
+compare$coor = nrow(compare):1
+x_space = 0.3 # задаем пробелы между столбцами
+x_first = 1.6 # координата первого столбца
+x_coors = c(1,x_first,x_first+x_space,x_first+x_space*2,x_first+x_space*3,x_first+x_space*4) # координаты всех столбцов
+
+
+g = ggplot() + geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde") + #добавляем текст с шрифтом AvantGarde
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde")+
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde") +
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde")
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+```{r}
+g = ggplot() + geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde") +
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde")+
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde") +
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde") +
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) # изменяем лимиты Х-оси чтобы "ужать" график
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+
+```{r}
+my_theme <- function() {
+  theme(
+      axis.text = element_blank(),   # убираем текст осей
+      axis.ticks = element_blank(),  # убираем отметки на осях
+      panel.grid  = element_blank(), # убираем сетку на заднем фоне
+      axis.title = element_blank()   # убираем названия осей
+      )
+}
+
+g = ggplot() + geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde") +
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde")+
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde") +
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde") +
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               my_theme()
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+https://spectralalliance.ru/
+https://color.adobe.com/ru/create/color-wheel/
+http://colorbrewer2.org/#type=sequential&scheme=Greys&n=6
+
+# про темы надо сказать
+
+```{r}
+background_color = "#140324" # цвет
+
+my_theme <- function() {
+  theme(
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      panel.grid  = element_blank(),
+      axis.title = element_blank(),
+      panel.background = element_rect(fill = background_color), # меняем задний фон
+      plot.background = element_rect(fill = background_color)   # меняем задний фон
+      )
+}
+
+g = ggplot() + geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde") +
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde")+
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde") +
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde") +
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               my_theme()
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+library(ggthemes)
+если лениво
+
+Немного теории про цвета
+
+
+```{r}
+g = ggplot() + geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +             #цвет шрифта     
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") +  #цвет шрифта
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +   #цвет шрифта
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde", color = "white")+          #цвет шрифта
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +            #цвет шрифта
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +           #цвет шрифта
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               my_theme()
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+
+
+```{r}
+g = ggplot() + geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +            
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") + 
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde", color = "white")+         
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
+               geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75), alpha=0.9) +  # добавляем блоки
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               my_theme()
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+```{r}
+g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75), alpha=0.9) +  # поменяли порядок слоев
+               geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +            
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") + 
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde", color = "white")+         
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               my_theme()
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+# регионы
+```{r}
+View(compare)
+
+g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75,fill=region), alpha=0.9) +  # добавили регионы
+               geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +            
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") + 
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde", color = "white")+         
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               my_theme()
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+
+```{r}
+compare$region = factor(compare$region,levels=(c("CIS","Europe","China","Southeast Asia","South America","North America"))) # сделали порядок регионов, будем уверены, какой цвет будет у каждого региона
+
+color_scheme1 = c("#6CFF4A","#FCF04B","#FF4233","#FF8D31","#51A891", "#424BBF")
+color_scheme2 = c("#5EDB1E","#238F14","#FF1A1C","#B11A1C","#24BEC9", "#146A70")
+color_scheme3 = c("#3CA36B","#6BE063","#EB6560","#EDA468", "#4575b4","#7DA5BD")
+
+
+g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75,fill=region), alpha=0.9) +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +            
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") + 
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde", color = "white")+         
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               my_theme() + 
+               scale_fill_manual(values=color_scheme1) # меняем цвета 
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+
+```{r}
+my_theme <- function() {
+  theme(
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      panel.grid  = element_blank(),
+      axis.title = element_blank(),
+      panel.background = element_rect(fill = background_color), 
+      plot.background = element_rect(fill = background_color),
+      legend.position="top",
+      legend.background = element_rect(fill = background_color), 
+      legend.text = element_text(colour="white",margin = margin(r = 30, unit = "pt"),size=14),
+      legend.title = element_blank(),
+      legend.spacing.x = unit(0.1, 'cm'),
+      legend.key.height =  unit(0.5, "cm"),
+      legend.key.width = unit(1.5, "cm")
+      )
+}
+
+g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75,fill=region), alpha=0.9) +
+               geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +            
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") + 
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde", color = "white")+         
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               my_theme() + 
+               scale_fill_manual(values=color_scheme3) # меняем цвета 
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+```{r}
+x_nms = c(" ","Previous\nRank","World\nRank","Rank\nChange","Elo\nPoints","DPC\nPoints")
+x_coors = c(1,x_first,x_first+x_space,x_first+x_space*2,x_first+x_space*3,x_first+x_space*4) # координаты всех столбцов
+
+g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75,fill=region), alpha=0.9) +
+               geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +            
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") + 
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde", color = "white")+         
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               my_theme() + 
+               scale_fill_manual(values=color_scheme3) +
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,color="white",size=4.3,family = "AvantGarde") # добавляем заголовки
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+
+```{r}
+compare$diff_dir = ifelse(compare$pos_diff > 0,"Positive",ifelse(compare$pos_diff < 0,"Negative","-"))
+compare$diff_dir = factor(compare$diff_dir,levels=unique(compare$diff_dir))
+compare$pos_diff = ifelse(compare$diff_dir == "Positive",str_c("+",compare$pos_diff),as.character(compare$pos_diff))
+compare$pos_diff[compare$pos_diff==0] = "—"
+View(compare)
+
+g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75,fill=region), alpha=0.9) +
+               geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +            
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") + 
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff,color=diff_dir),family = "AvantGarde")+        # теперь цвет текста зависит от роста\падения позиции 
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               my_theme() + 
+               scale_fill_manual(values=color_scheme3) +
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,color="white",size=4.3,family = "AvantGarde")
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+
+```{r}
+compare$diff_dir = factor(compare$diff_dir,levels=c("Positive","Negative","-")) # определяем прядок значений
+change_color = c("#10D636","#FA3433","#E8E4D9") # определяем цвета
+
+g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75,fill=region), alpha=0.9) +
+               geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +            
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") + 
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff,color=diff_dir),family = "AvantGarde")+  
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               my_theme() + 
+               scale_fill_manual(values=color_scheme3) +
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,color="white",size=4.3,family = "AvantGarde") +
+               scale_colour_manual(values=change_color) + # меняем палитру для color
+               guides(color = FALSE) # убираем из легенды color
+
+               
+
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+
+```{r}
+ my_theme <- function() {
+  theme(
+      axis.text = element_blank(),
+      axis.ticks = element_blank(),
+      panel.grid  = element_blank(),
+      axis.title = element_blank(),
+      panel.background = element_rect(fill = background_color), 
+      plot.background = element_rect(fill = background_color),
+      legend.position="top",
+      legend.background = element_rect(fill = background_color), 
+      legend.text = element_text(colour="white",margin = margin(r = 30, unit = "pt"),size=14),
+      legend.title = element_blank(),
+      legend.spacing.x = unit(0.1, 'cm'),
+      legend.key.height =  unit(0.5, "cm"),
+      legend.key.width = unit(1.5, "cm"),
+      plot.title = element_text(size = rel(2),color="white",hjust=0.5,family = "AvantGarde"), #параметры заголовка
+      plot.subtitle = element_text(size=rel(1),color="white",hjust=0.7,family="AvantGarde")   #параметры подзаголовка
+      )
+}
+
+title_text = "Elo ranking by Spectral Alliance\nKuala Lumpur Major\nOpen Quals Next Major"
+subtitle_text = "And minor local tournaments"
+
+ g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75,fill=region), alpha=0.9) +
+               geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +            
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") + 
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff,color=diff_dir),family = "AvantGarde")+  
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               my_theme() + 
+               scale_fill_manual(values=color_scheme3) +
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,color="white",size=4.3,family = "AvantGarde") +
+               scale_colour_manual(values=change_color) + 
+               guides(color = FALSE) +
+               ggtitle(title_text,subtitle=subtitle_text) #добавляем заголовки
+
+ 
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
+
+# картинки
+
+```{r}
+path = "dota_logo.png"
+h = image_read(path) %>% rasterGrob(interpolate=TRUE)
+
+g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75,fill=region), alpha=0.9) +
+               geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +            
+               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") + 
+               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +  
+               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff,color=diff_dir),family = "AvantGarde")+  
+               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
+               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
+               xlim(min(x_coors)-0.5,max(x_coors)+0.3) +
+               my_theme() + 
+               scale_fill_manual(values=color_scheme3) +
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,color="white",size=4.3,family = "AvantGarde") +
+               scale_colour_manual(values=change_color) + 
+               guides(color = FALSE) +
+               ggtitle(title_text,subtitle=subtitle_text) +
+               annotation_custom(h, xmin=0.5, xmax=1.5, ymin=max(compare$coor)+1.3, ymax=max(compare$coor)+2.8) +
+               geom_point()
+ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+```
