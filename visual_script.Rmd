@@ -34,19 +34,26 @@ ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
 ```
 
 ```{r}
+x_nms = c(" ","Previous\nRank","World\nRank","Rank\nChange","Elo\nPoints","DPC\nPoints") 
+
 g = ggplot() + geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde") +
                geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde") +  
                geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde") +  
                geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde")+
                geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde") +
                geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde") +
-               xlim(min(x_coors)-0.5,max(x_coors)+0.5) # изменяем лимиты Х-оси чтобы "ужать" график
+               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +# изменяем лимиты Х-оси чтобы "ужать" график
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,size=4.3,family = "AvantGarde") #второй способ добавить текст
 
 ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
 ```
 
 
 ```{r}
+?theme_bw()
+?theme_classic()
+?theme_dark()
+
 my_theme <- function() {
   theme(
       axis.text = element_blank(),   # убираем текст осей
@@ -63,7 +70,7 @@ g = ggplot() + geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family
                geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde") +
                geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde") +
                xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
-               my_theme()
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,size=4.3,family = "AvantGarde") + my_theme() # добавляем нашу тему
 
 ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
 ```
@@ -95,6 +102,7 @@ g = ggplot() + geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family
                geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde") +
                geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde") +
                xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,size=4.3,family = "AvantGarde") +
                my_theme()
 
 ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
@@ -114,6 +122,7 @@ g = ggplot() + geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family
                geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +            #цвет шрифта
                geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +           #цвет шрифта
                xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,size=4.3,family = "AvantGarde",color = "white") +    #цвет шрифта
                my_theme()
 
 ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
@@ -130,13 +139,14 @@ g = ggplot() + geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family
                geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
                geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75), alpha=0.9) +  # добавляем блоки
                xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,size=4.3,family = "AvantGarde",color = "white") +    #цвет шрифта
                my_theme()
 
 ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
 ```
 
 ```{r}
-g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75), alpha=0.9) +  # поменяли порядок слоев
+g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.5,width=0.3), alpha=0.9) +  # поменяли порядок слоев
                geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +            
                geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") + 
                geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +  
@@ -144,6 +154,7 @@ g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.
                geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
                geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
                xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,size=4.3,family = "AvantGarde",color = "white") +
                my_theme()
 
 ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
@@ -161,6 +172,7 @@ g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.
                geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
                geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
                xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,size=4.3,family = "AvantGarde",color = "white") +
                my_theme()
 
 ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
@@ -183,6 +195,7 @@ g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.
                geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
                geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
                xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,size=4.3,family = "AvantGarde",color = "white") +
                my_theme() + 
                scale_fill_manual(values=color_scheme1) # меняем цвета 
 
@@ -191,6 +204,8 @@ ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
 
 
 ```{r}
+
+# работаем с легендой
 my_theme <- function() {
   theme(
       axis.text = element_blank(),
@@ -217,6 +232,7 @@ g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.
                geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
                geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
                xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
+               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,size=4.3,family = "AvantGarde",color = "white") +
                my_theme() + 
                scale_fill_manual(values=color_scheme3) # меняем цвета 
 
@@ -224,26 +240,7 @@ ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
 ```
 
 ```{r}
-x_nms = c(" ","Previous\nRank","World\nRank","Rank\nChange","Elo\nPoints","DPC\nPoints")
-x_coors = c(1,x_first,x_first+x_space,x_first+x_space*2,x_first+x_space*3,x_first+x_space*4) # координаты всех столбцов
-
-g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.85,width=0.75,fill=region), alpha=0.9) +
-               geom_text(data=compare,aes(y=coor,x=x_coors[1],label=name),family = "AvantGarde", color = "white") +            
-               geom_text(data=compare,aes(y=coor,x=x_coors[2],label=pos_before_date),family = "AvantGarde", color = "white") + 
-               geom_text(data=compare,aes(y=coor,x=x_coors[3],label=pos_after_date),family = "AvantGarde", color = "white") +  
-               geom_text(data=compare,aes(y=coor,x=x_coors[4],label=pos_diff),family = "AvantGarde", color = "white")+         
-               geom_text(data=compare,aes(y=coor,x=x_coors[5],label=elllo),family = "AvantGarde", color = "white") +           
-               geom_text(data=compare,aes(y=coor,x=x_coors[6],label=Points),family = "AvantGarde", color = "white") +          
-               xlim(min(x_coors)-0.5,max(x_coors)+0.5) +
-               my_theme() + 
-               scale_fill_manual(values=color_scheme3) +
-               annotate("text",x=x_coors,y=max(compare$coor+2),label=x_nms,color="white",size=4.3,family = "AvantGarde") # добавляем заголовки
-
-ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
-```
-
-
-```{r}
+library(stringr)
 compare$diff_dir = ifelse(compare$pos_diff > 0,"Positive",ifelse(compare$pos_diff < 0,"Negative","-"))
 compare$diff_dir = factor(compare$diff_dir,levels=unique(compare$diff_dir))
 compare$pos_diff = ifelse(compare$diff_dir == "Positive",str_c("+",compare$pos_diff),as.character(compare$pos_diff))
@@ -285,7 +282,6 @@ g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.
                guides(color = FALSE) # убираем из легенды color
 
                
-
 ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
 ```
 
@@ -336,6 +332,10 @@ ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
 # картинки
 
 ```{r}
+library(magick)
+library(png)
+library(grid)
+
 path = "dota_logo.png"
 h = image_read(path) %>% rasterGrob(interpolate=TRUE)
 
@@ -355,5 +355,17 @@ g = ggplot() + geom_tile(data=compare, mapping=aes(x=x_coors[1],y=coor,height=0.
                ggtitle(title_text,subtitle=subtitle_text) +
                annotation_custom(h, xmin=0.5, xmax=1.5, ymin=max(compare$coor)+1.3, ymax=max(compare$coor)+2.8) +
                geom_point()
-ggsave("xmpl_pic.png",g, height = 7 * 2.3, width = 9.3)
+
+ggsave("xmpl_pic.png",g, height = 7*2.3, width = 9)
 ```
+
+
+# Полезные ссылки
+
+Основные проблемы возникали с темой и легендой, эти ссылки были основной помощью
+http://www.sthda.com/english/wiki/ggplot2-legend-easy-steps-to-change-the-position-and-the-appearance-of-a-graph-legend-in-r-software
+https://ggplot2.tidyverse.org/reference/guide_legend.html
+https://ggplot2.tidyverse.org/reference/theme.html
+
+Очень много вдохновения почерпнул из этого поста.
+https://www.r-bloggers.com/r-how-to-layout-and-design-an-infographic/
